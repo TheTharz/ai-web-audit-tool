@@ -1,0 +1,14 @@
+Analyze the following data for the URL: {meta_title}
+
+FACTUAL METRICS:
+- Word Count: {word_count}
+- Headings: {headings} (H1, H2, H3)
+- Total Images: {total_images}
+- Images Missing Alt Text: {alt_missing_percent}%
+- Internal Links: {internal_links}
+- External Links: {external_links}
+- CTA Count: {cta_count}
+- Meta Description: {meta_description}
+
+CONTENT SNIPPET:
+{raw_content}
