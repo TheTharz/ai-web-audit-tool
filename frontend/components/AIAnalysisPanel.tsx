@@ -1,3 +1,5 @@
+import { MouseEvent } from "react";
+
 import { AnalyzeResponse } from "@/types/analyzer";
 
 type AIAnalysisPanelProps = {
@@ -6,6 +8,30 @@ type AIAnalysisPanelProps = {
 
 export function AIAnalysisPanel({ data }: AIAnalysisPanelProps) {
   const { ai_analysis } = data;
+
+  function scrollToInsight(
+    event: MouseEvent<HTMLAnchorElement>,
+    insightIndex: number
+  ) {
+    event.preventDefault();
+
+    const target = document.getElementById(`insight-${insightIndex}`);
+    if (!target) {
+      return;
+    }
+
+    const stickyForm = document.querySelector(".form-card");
+    const stickyHeight =
+      stickyForm instanceof HTMLElement ? stickyForm.offsetHeight : 0;
+    const top = target.getBoundingClientRect().top + window.scrollY - stickyHeight - 24;
+
+    window.scrollTo({
+      top,
+      behavior: "smooth",
+    });
+
+    window.history.replaceState(null, "", `#insight-${insightIndex}`);
+  }
 
   function resolveInsightIndex(relatedInsight?: number): number | null {
     if (typeof relatedInsight !== "number") {
@@ -79,7 +105,11 @@ export function AIAnalysisPanel({ data }: AIAnalysisPanelProps) {
                   const finding = ai_analysis.insights[insightIndex]?.finding || "Insight";
 
                   return (
-                    <a className="related-link" href={`#insight-${insightIndex}`}>
+                    <a
+                      className="related-link"
+                      href={`#insight-${insightIndex}`}
+                      onClick={(event) => scrollToInsight(event, insightIndex)}
+                    >
                       {finding}
                     </a>
                   );
