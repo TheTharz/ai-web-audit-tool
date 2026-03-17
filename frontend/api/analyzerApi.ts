@@ -17,6 +17,29 @@ const analyzerClient = axios.create({
   },
 });
 
+analyzerClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (axios.isAxiosError(error)) {
+      const detail = error.response?.data?.detail;
+      if (detail) {
+        return Promise.reject(new Error(String(detail)));
+      }
+      if (error.response) {
+        return Promise.reject(
+          new Error(`Request failed with status ${error.response.status}.`)
+        );
+      }
+      return Promise.reject(
+        new Error(
+          "Unable to reach the backend. Please check your API configuration and ensure the server is running."
+        )
+      );
+    }
+    return Promise.reject(error);
+  }
+);
+
 export async function analyzeUrl(url: string): Promise<AnalyzeResponse> {
   const response = await analyzerClient.post<AnalyzeResponse>("/analyze", {
     url,
