@@ -1,6 +1,6 @@
 import { FormEvent, useMemo, useState } from "react";
 
-import { analyzeUrl } from "@/api/analyzerApi";
+import { analyzeUrl, ApiError } from "@/api/analyzerApi";
 import { AnalyzeResponse } from "@/types/analyzer";
 
 type UseUrlAnalyzerState = {
@@ -35,10 +35,14 @@ export function useUrlAnalyzer(): UseUrlAnalyzerState {
     try {
       const data = await analyzeUrl(url.trim());
       setResult(data);
-    } catch {
-      setError(
-        "Unable to analyze the URL right now. Please check your API env configuration and backend availability."
-      );
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setError(err.message);
+      } else {
+        setError(
+          "Unable to reach the server. Please check your connection and API configuration."
+        );
+      }
     } finally {
       setIsLoading(false);
     }
