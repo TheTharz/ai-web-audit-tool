@@ -35,8 +35,10 @@ export function useUrlAnalyzer(): UseUrlAnalyzerState {
     try {
       const data = await analyzeUrl(url.trim());
       setResult(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "An unexpected error occurred. Please try again.");
+    } catch {
+      setError(
+        "Unable to analyze the URL right now. Please check your API env configuration and backend availability."
+      );
     } finally {
       setIsLoading(false);
     }
