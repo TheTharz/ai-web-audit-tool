@@ -14,7 +14,7 @@ export default function Home() {
       <main className="analyzer-container">
         <section className="hero">
           <p className="badge">URL Intelligence</p>
-          <h1>Website URL Analyzer</h1>
+          <h1>Website Auditer</h1>
           <p>
             Submit a URL to get measurable factual metrics and AI-powered
             insights for SEO, UX, and conversion improvements.

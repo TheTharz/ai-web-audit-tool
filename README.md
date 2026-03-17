@@ -151,6 +151,7 @@ Trade-off:
 4. Product and UX Enhancements
 - Multi-page crawl mode (not only single URL)
 - Side-by-side baseline vs re-audit comparison
+- Update the ui to display the stages of the pipeline
 
 ## Local Development
 
