@@ -1,0 +1,204 @@
+System Prompt: ROLE
+You are a senior-level Website Auditor, specializing in SEO, performance, accessibility, messaging clarity, and conversion optimization.
+
+OBJECTIVE
+Analyze structured metrics and content snippets from a single webpage audit dataset and generate a structured, data-driven audit report.
+
+SCOPE OF ANALYSIS
+You MUST cover the following areas:
+- SEO structure
+- Messaging clarity
+- CTA usage
+- Content depth
+- UX and structural concerns
+
+CORE RESPONSIBILITIES
+- Base every observation strictly on the provided data. Do NOT assume or infer beyond the dataset.
+- Translate provided metrics into clear, actionable insights.
+- Identify risks, missed opportunities, and optimization gaps.
+
+ANALYSIS GUIDELINES
+
+1. DATA USAGE
+- Use ONLY the metrics and values provided in the input.
+- Do NOT perform additional calculations unless explicitly required.
+- Do NOT infer missing values.
+
+2. SEO STRUCTURE
+Evaluate:
+- Meta title and description (presence and length)
+- Heading hierarchy (H1–H6 usage and structure)
+- Image alt text coverage
+- Internal vs external linking balance
+
+Requirements:
+- Use provided metrics to determine SEO risk (Low / Moderate / High / Critical)
+- Clearly explain why the issue impacts search visibility
+
+3. MESSAGING CLARITY
+- Assess clarity, focus, and specificity of the content using provided text snippets
+- Identify vague or unclear messaging
+- Support observations using actual content evidence
+
+4. CTA USAGE
+- Evaluate CTA count, placement, and distribution
+- Identify underutilization or poor placement using provided data
+- Tie findings directly to conversion impact
+
+5. CONTENT DEPTH
+- Assess content volume and structure using provided metrics
+- Identify thin content or lack of supporting sections
+
+6. UX & STRUCTURAL CONCERNS
+- Identify layout or structural issues using available data
+- Highlight friction points such as missing elements or poor distribution
+
+INSIGHT DEPTH
+Each insight MUST include:
+- Finding (clear issue)
+- Evidence (exact supporting data from input)
+- Impact (business or user consequence)
+
+DUPLICATION RULES
+- Do NOT repeat the same issue in different wording.
+- Each insight must represent a distinct problem.
+- If multiple data points relate to the same issue, combine them into ONE insight.
+- Group findings by issue type (e.g., alt text → one insight, CTAs → one insight).
+
+OUTPUT CONSTRAINTS
+- Generate 3 to 8 insights maximum
+- Each insight must be unique and non-overlapping
+- Do not repeat the same issue across multiple categories
+
+STRICT RULES
+- Do NOT provide generic advice or boilerplate recommendations
+- Do NOT speculate beyond the given data
+- Do NOT invent or calculate missing metrics
+
+OUTPUT STYLE
+- Professional, concise, and analytical tone
+- Consultant-grade observations only
+- Use structured format:
+
+Finding:
+Evidence:
+Impact:
+
+EXAMPLE
+
+Finding:
+Only 3 CTAs are present across the page.
+
+Evidence:
+CTA count = 3 on a long-form page.
+
+Impact:
+This limits user guidance and reduces conversion opportunities, especially for users who do not scroll through the entire page.
+
+---
+
+Finding:
+8 out of 12 images are missing alt text.
+
+Evidence:
+Alt text present on 4 images, missing on 8 images.
+
+Impact:
+This creates a high SEO and accessibility risk by reducing image search visibility and limiting usability for screen reader users.
+
+================================================================================================================================================
+
+User Prompt: Analyze the following data for the URL: B2B Digital Agency for Enterprises | eight25
+
+FACTUAL METRICS:
+- Word Count: 384
+- Headings: {'h1': 1, 'h2': 5, 'h3': 10} (H1, H2, H3)
+- Total Images: 30
+- Images Missing Alt Text: 93.33%
+- Internal Links: 51
+- External Links: 2
+- CTA Count: 10
+- Meta title: B2B Digital Agency for Enterprises | eight25
+- Meta Description: Global B2B digital agency offering enterprise web design, mobile apps, and strategic consulting for Fortune 500 firms.
+
+CONTENT SNIPPET:
+B2B Digital Agency for Enterprises | eight25 [space] Work Services Brand Brand Strategy Visual Identity Brand Enablement Campaign Development Creative Web Design App + Interface Design Interaction + Motion Design Video Technology CMS Implementation Web Architecture + Backend Development Personalization Data Integration + Analytics Growth Search Engine Optimization Conversion Rate Optimization Account Based Marketing Content Strategy + Marketing Execution Studio  Services Cras mattis consectetur purus sit amet fermentum. Nullam quis risus eget urna mollis ornare vel eu leo. Curabitur blandit tempus porttitor. Learn More Platforms About Blog Let’s talk Digital experiences for the modern enterprise We build brands and web experiences that help you build the ultimate customer journey. Your browser does not support HTML5 video. The world’s best companies choose to work with eight25 Google Link Your browser does not support HTML5 video. Qlik Link Your browser does not support HTML5 video. Intralinks Link Your browser does not support HTML5 video. Andela Link Your browser does not support HTML5 video. Qualcomm Link Your browser does not support HTML5 video. View all work Insights Analyzing the ‘Request a Demo’ Page: Unpacking Why Conversions Are Lagging B2B SaaS Enterprise Demo Read More Uncovering Homepage Hero Friction: Why Visitors Bounce and How to Fix It GTM B2B SaaS Read More Why Is Brand Alignment Important For B2B Enterprise Websites? GTM B2B Read More Assessment:  Is your website dressed for success? GTM B2B SaaS Read More Planning to Sell to Enterprise? Start With a Hard Look at Your Website CRO Social proof Product images Read More Read our blog Success stories… We are partnering with forward-thinking companies and privileged to work with Fortune 500 companies, technology SMEs, and funded startups. Your browser does not support HTML5 video. Watch Video We are partnering with forward-thinking companies and privileged to work with Fortune 500 companies, technology SMEs, and funded startups. Your browser does not support HTML5 video. Watch Video We are partnering with forward-thinking companies and privileged to work with Fortune 500 companies, technology SMEs, and funded startups. Your browser does not support HTML5 video. Watch Video Let’s work together. Name Email Address Phone Company Message.... Submit 2055 Gateway Place - Ste 500 San Jose, CA 95110 © 2026 EIGHT25MEDIA. All Rights Reserved Privacy Policy Terms AI info Privacy Policy Terms AI info About Contact Us Blog Facebook Linkedin
+
+=========================================================================================================================================================
+
+AI raw output: {
+  "insights": [
+    {
+      "dedup_key": "missing_alt_text_critical",
+      "category": "Accessibility",
+      "finding": "A critical majority of images on the page are missing descriptive alt text.",
+      "evidence": "Total Images: 30, Images Missing Alt Text: 93.33%.",
+      "impact": "This creates a critical barrier for accessibility tools like screen readers and severely hinders the page's SEO performance for image search, making visual content undiscoverable for search engines.",
+      "severity": "Critical"
+    },
+    {
+      "dedup_key": "placeholder_text_present",
+      "category": "Content",
+      "finding": "Placeholder text (Lorem Ipsum) is present within a prominent content section of the page.",
+      "evidence": "The phrase 'Cras mattis consectetur purus sit amet fermentum. Nullam quis risus eget urna mollis ornare vel eu leo. Curabitur blandit tempus porttitor.' appears under 'Studio Services' in the content snippet.",
+      "impact": "This severely damages professional credibility, indicates an incomplete or unpolished website, and degrades the user experience by presenting meaningless content, potentially leading to immediate bounce and distrust.",
+      "severity": "Critical"
+    },
+    {
+      "dedup_key": "low_word_count_b2b",
+      "category": "Content",
+      "finding": "The page exhibits limited textual content, which is insufficient for an enterprise-focused B2B agency's primary service page.",
+      "evidence": "Word Count: 384 words.",
+      "impact": "This restricted content depth hinders the page's ability to thoroughly explain complex services, establish authority, and address the detailed considerations typically required by enterprise clients, potentially reducing engagement, SEO potential, and conversion rates.",
+      "severity": "Moderate"
+    },
+    {
+      "dedup_key": "video_fallback_issue",
+      "category": "UX",
+      "finding": "Multiple video elements on the page display a generic browser fallback message instead of content or an appropriate alternative.",
+      "evidence": "The phrase 'Your browser does not support HTML5 video.' is repeated multiple times in the content snippet where video elements are expected.",
+      "impact": "Users with incompatible browsers or network issues will miss key visual content, leading to a fragmented and potentially frustrating user experience and a loss of conveyed information.",
+      "severity": "Moderate"
+    },
+    {
+      "dedup_key": "linking_imbalance",
+      "category": "SEO",
+      "finding": "There is a significant imbalance between internal and external links, heavily favoring internal navigation over external authority building.",
+      "evidence": "51 internal links versus only 2 external links.",
+      "impact": "While strong internal linking is beneficial, an extremely low number of external links can limit opportunities to build external authority, cite credible sources, or provide additional valuable resources to users, potentially impacting SEO value and user trust.",
+      "severity": "Low"
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "High",
+      "action": "Implement descriptive and keyword-rich alt text for all images present on the page.",
+      "reasoning": "This directly addresses the critical accessibility barrier and leverages missed SEO opportunities for image search, significantly improving both user experience and search engine visibility.",
+      "related_insight": 0
+    },
+    {
+      "priority": "High",
+      "action": "Replace all placeholder text ('Cras mattis...') with meaningful, final content that accurately describes the 'Studio Services' and other incomplete sections.",
+      "reasoning": "Eliminating placeholder content is crucial for restoring professional credibility, providing actual value to users, and ensuring search engines index relevant, high-quality information.",
+      "related_insight": 1
+    },
+    {
+      "priority": "Medium",
+      "action": "Expand the page's textual content to provide more in-depth information about services, methodology, case studies, and unique value propositions relevant to enterprise clients.",
+      "reasoning": "Increasing content depth will enhance the page's authority and relevance for search engines, better inform sophisticated enterprise decision-makers, and improve overall engagement and conversion potential.",
+      "related_insight": 2
+    },
+    {
+      "priority": "Medium",
+      "action": "Implement robust video fallback strategies, such as providing informative static images with descriptive text, embedding playable video files directly, or linking to external video platforms, instead of generic HTML5 messages.",
+      "reasoning": "Improving video fallback ensures all users can access and understand the visual content, regardless of browser compatibility, thereby enhancing user experience and ensuring consistent content delivery.",
+      "related_insight": 3
+    },
+    {
+      "priority": "Low",
+      "action": "Strategically identify and integrate relevant, high-quality external links to authoritative industry sources, partner websites, or supporting research where appropriate.",
+      "reasoning": "A more balanced linking strategy, including relevant external links, can signal external authority to search engines and provide additional valuable context and trust signals for users.",
+      "related_insight": 4
+    }
+  ]
+}

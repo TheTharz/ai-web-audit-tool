@@ -16,24 +16,34 @@ export type FactualMetrics = {
 };
 
 export type AuditInsight = {
-  category? : string;
-  finding? : string;
-  evidence? : string;
-  impact? : string;
-  severity? : string;
-}
+  dedup_key?: string;
+  category?: string;
+  finding?: string;
+  evidence?: string;
+  impact?: string;
+  severity?: string;
+};
 
 export type Recommendation = {
-  priority? : string;
-  action? : string;
-  reasoning? : string;
-  related_insight? : number;
-}
+  priority?: string;
+  action?: string;
+  reasoning?: string;
+  related_insight?: number;
+};
+
+export type PrioritizedRecommendation = {
+  priority: 'High' | 'Medium' | 'Low';
+  action: string;
+  reasoning: string;
+  related_insights: number[];
+};
+
+export type AIAnalysis = {
+  insights: AuditInsight[];
+  recommendations: PrioritizedRecommendation[];
+};
 
 export type AnalyzeResponse = {
   factual_metrics: FactualMetrics;
-  ai_analysis: {
-    insights: AuditInsight[];
-    recommendations: Recommendation[];
-  };
+  ai_analysis: AIAnalysis;
 };

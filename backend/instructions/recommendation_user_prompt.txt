@@ -1,0 +1,29 @@
+AUDIT DATA FOR URL: {meta_title}
+
+FACTUAL METRICS:
+- Word Count: {word_count}
+- Headings: {headings} (H1, H2, H3)
+- Total Images: {total_images}
+- Images Missing Alt Text: {alt_missing_percent}%
+- Internal Links: {internal_links}
+- External Links: {external_links}
+- CTA Count: {cta_count}
+- Meta Title: {meta_title}
+- Meta Description: {meta_description}
+
+RAW AUDIT INSIGHTS:
+{raw_insights_json}
+
+YOUR TASK:
+1. Review each insight and its severity/impact assessment
+2. Identify the 3–5 most strategically important insights
+3. Synthesize overlapping or related insights into cohesive recommendations
+4. Rank by business impact and implementation feasibility
+5. For each recommendation:
+   - Specify the exact action to take
+   - Explain why this matters (link to insight evidence and business outcome)
+   - Assign Priority: High / Medium / Low
+   - Reference which insights support this recommendation
+
+OUTPUT:
+Return a list of 3–5 prioritized recommendations. Do not exceed 5. Each recommendation should drive measurable business value (conversion, SEO, UX, or compliance).

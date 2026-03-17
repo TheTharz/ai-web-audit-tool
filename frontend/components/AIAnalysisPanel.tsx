@@ -1,6 +1,6 @@
 import { MouseEvent } from "react";
 
-import { AnalyzeResponse } from "@/types/analyzer";
+import { AnalyzeResponse, PrioritizedRecommendation, AuditInsight } from "@/types/analyzer";
 
 type AIAnalysisPanelProps = {
   data: AnalyzeResponse;
@@ -33,23 +33,15 @@ export function AIAnalysisPanel({ data }: AIAnalysisPanelProps) {
     window.history.replaceState(null, "", `#insight-${insightIndex}`);
   }
 
-  function resolveInsightIndex(relatedInsight?: number): number | null {
-    if (typeof relatedInsight !== "number") {
-      return null;
-    }
-
-    const zeroBased = relatedInsight;
-    if (zeroBased >= 0 && zeroBased < ai_analysis.insights.length) {
-      return zeroBased;
-    }
-
-    const oneBased = relatedInsight - 1;
-    if (oneBased >= 0 && oneBased < ai_analysis.insights.length) {
-      return oneBased;
-    }
-
-    return null;
+  function groupRecommendationsByPriority(recommendations: PrioritizedRecommendation[]) {
+    return {
+      high: recommendations.filter(r => r.priority === 'High'),
+      medium: recommendations.filter(r => r.priority === 'Medium'),
+      low: recommendations.filter(r => r.priority === 'Low'),
+    };
   }
+
+  const groupedRecommendations = groupRecommendationsByPriority(ai_analysis.recommendations);
 
   return (
     <article className="card">
@@ -83,42 +75,138 @@ export function AIAnalysisPanel({ data }: AIAnalysisPanelProps) {
 
       <div className="analysis-section">
         <h3>Recommendations</h3>
-        <div className="stack-list">
-          {ai_analysis.recommendations.map((item, index) => (
-            <div key={`recommendation-${index}`} className="insight-card recommendation">
-              <p className="pill">Priority: {item.priority || "N/A"}</p>
-              <p>
-                <strong>Action:</strong> {item.action || "N/A"}
-              </p>
-              <p>
-                <strong>Reasoning:</strong> {item.reasoning || "N/A"}
-              </p>
-              <p>
-                <strong>Related Insight:</strong>{" "}
-                {(() => {
-                  const insightIndex = resolveInsightIndex(item.related_insight);
+        <p className="recommendations-intro">Priority-ordered actions to improve your site performance and user experience.</p>
 
-                  if (insightIndex === null) {
-                    return "N/A";
-                  }
-
-                  const finding = ai_analysis.insights[insightIndex]?.finding || "Insight";
-
-                  return (
-                    <a
-                      className="related-link"
-                      href={`#insight-${insightIndex}`}
-                      onClick={(event) => scrollToInsight(event, insightIndex)}
-                    >
-                      {finding}
-                    </a>
-                  );
-                })()}
-              </p>
+        {groupedRecommendations.high.length > 0 && (
+          <div className="recommendation-group priority-group-high">
+            <div className="priority-group-header">
+              <h4 className="priority-group-title">High Priority</h4>
+              <span className="recommendation-count">{groupedRecommendations.high.length}</span>
             </div>
-          ))}
-        </div>
+            <div className="stack-list">
+              {groupedRecommendations.high.map((item, index) => (
+                <RecommendationCard
+                  key={`high-${index}`}
+                  recommendation={item}
+                  insights={ai_analysis.insights}
+                  onScrollToInsight={scrollToInsight}
+                  cardNumber={index + 1}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {groupedRecommendations.medium.length > 0 && (
+          <div className="recommendation-group priority-group-medium">
+            <div className="priority-group-header">
+              <h4 className="priority-group-title">Medium Priority</h4>
+              <span className="recommendation-count">{groupedRecommendations.medium.length}</span>
+            </div>
+            <div className="stack-list">
+              {groupedRecommendations.medium.map((item, index) => (
+                <RecommendationCard
+                  key={`medium-${index}`}
+                  recommendation={item}
+                  insights={ai_analysis.insights}
+                  onScrollToInsight={scrollToInsight}
+                  cardNumber={groupedRecommendations.high.length + index + 1}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {groupedRecommendations.low.length > 0 && (
+          <div className="recommendation-group priority-group-low">
+            <div className="priority-group-header">
+              <h4 className="priority-group-title">Low Priority</h4>
+              <span className="recommendation-count">{groupedRecommendations.low.length}</span>
+            </div>
+            <div className="stack-list">
+              {groupedRecommendations.low.map((item, index) => (
+                <RecommendationCard
+                  key={`low-${index}`}
+                  recommendation={item}
+                  insights={ai_analysis.insights}
+                  onScrollToInsight={scrollToInsight}
+                  cardNumber={groupedRecommendations.high.length + groupedRecommendations.medium.length + index + 1}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {ai_analysis.recommendations.length === 0 && (
+          <p className="no-recommendations">No recommendations available.</p>
+        )}
       </div>
     </article>
+  );
+}
+
+type RecommendationCardProps = {
+  recommendation: PrioritizedRecommendation;
+  insights: AuditInsight[];
+  onScrollToInsight: (event: MouseEvent<HTMLAnchorElement>, index: number) => void;
+  cardNumber: number;
+};
+
+function RecommendationCard({
+  recommendation,
+  insights,
+  onScrollToInsight,
+  cardNumber,
+}: RecommendationCardProps) {
+  return (
+    <div className={`recommendation-card priority-${recommendation.priority.toLowerCase()}`}>
+      <div className="recommendation-top">
+        <div className="recommendation-number">{cardNumber}</div>
+        <span className={`priority-badge priority-${recommendation.priority.toLowerCase()}`}>
+          {recommendation.priority} Priority
+        </span>
+      </div>
+
+      <div className="recommendation-content">
+        <h5 className="recommendation-action">{recommendation.action}</h5>
+        <p className="recommendation-reasoning">{recommendation.reasoning}</p>
+      </div>
+
+      {recommendation.related_insights.length > 0 && (
+        <details className="related-insights-inline">
+          <summary className="related-insights-summary">
+            <span className="related-Count-badge">{recommendation.related_insights.length}</span>
+            <span className="related-summary-text">View related insights</span>
+          </summary>
+          <div className="related-insights-content">
+            <ul className="related-insights-list">
+              {recommendation.related_insights.map((insightIdx) => {
+                const insight = insights[insightIdx];
+                if (!insight) return null;
+
+                return (
+                  <li key={insightIdx} className="related-insight-item">
+                    <div className="insight-item-header">
+                      <a
+                        href={`#insight-${insightIdx}`}
+                        onClick={(e) => onScrollToInsight(e, insightIdx)}
+                        className="insight-item-title"
+                      >
+                        {insight.finding}
+                      </a>
+                      <span className="insight-item-category">{insight.category}</span>
+                      <span className={`insight-item-severity severity-${insight.severity?.toLowerCase()}`}>
+                        {insight.severity}
+                      </span>
+                    </div>
+                    <p className="related-evidence">{insight.evidence}</p>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </details>
+      )}
+    </div>
   );
 }

@@ -8,7 +8,16 @@ FACTUAL METRICS:
 - Internal Links: {internal_links}
 - External Links: {external_links}
 - CTA Count: {cta_count}
+- Meta title: {meta_title}
 - Meta Description: {meta_description}
 
 CONTENT SNIPPET:
 {raw_content}
+
+YOUR TASK:
+Extract 3-8 distinct audit insights from the above metrics and content. For each insight, provide:
+- Finding: The specific issue identified
+- Evidence: Exact metrics supporting the finding
+- Impact: Business or user consequence
+- Severity: Low / Moderate / High / Critical
+
