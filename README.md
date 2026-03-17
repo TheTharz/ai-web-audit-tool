@@ -4,6 +4,10 @@ A full-stack URL audit application that combines deterministic page scraping wit
 
 The system analyzes a public webpage URL, extracts factual SEO/conversion metrics, and then uses a two-stage AI pipeline (via Gemini) to first extract distinct audit insights and then synthesize them into prioritized actionable recommendations in a strict JSON shape that the frontend can render safely.
 
+# Demo
+
+[Screencast from 2026-03-17 18-00-57.webm](https://github.com/user-attachments/assets/73601649-f87b-42cf-b56c-c66702c57e3d)
+
 ## Tech Stack
 
 - Backend: FastAPI, Pydantic, HTTPX, BeautifulSoup, Google GenAI SDK
