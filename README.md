@@ -2,7 +2,7 @@
 
 A full-stack URL audit application that combines deterministic page scraping with structured AI analysis.
 
-The system analyzes a public webpage URL, extracts factual SEO/conversion metrics, and then asks Gemini to produce actionable insights and recommendations in a strict JSON shape that the frontend can render safely.
+The system analyzes a public webpage URL, extracts factual SEO/conversion metrics, and then uses a two-stage AI pipeline (via Gemini) to first extract distinct audit insights and then synthesize them into prioritized actionable recommendations in a strict JSON shape that the frontend can render safely.
 
 ## Tech Stack
 
@@ -23,12 +23,12 @@ Request flow:
 2. Frontend sends `POST /analyze` to FastAPI.
 3. Backend scraper fetches and parses HTML with HTTPX + BeautifulSoup.
 4. Backend computes factual metrics (headings, links, images, metadata, CTA count, text sample).
-5. Backend builds AI prompt from instruction templates and factual metrics.
-6. Gemini returns strict JSON (validated by Pydantic schema).
-7. Backend deduplicates overlapping insights/recommendations.
+5. Backend executes **Stage 1 AI inference**: builds a prompt to extract distinct, deduplicated insights from the computed facts.
+6. Backend executes **Stage 2 AI inference**: synthesizes the Stage 1 insights into a concise list of high-priority strategic recommendations.
+7. Both stages return strict JSON (validated by Pydantic schemas).
 8. API returns combined payload:
    - `factual_metrics`
-   - `ai_analysis`
+   - `ai_analysis` (Insights + Recommendations)
 9. Frontend renders metrics cards and AI recommendations.
 
 Key backend modules:
@@ -90,6 +90,18 @@ Why:
 - Improves consistency of tone and output quality
 - Avoids generic, unfocused feedback
 
+### 5) Two-Stage Pipeline
+
+Instead of a single zero-shot prompt that tries to find issues and solve them simultaneously, we split the reasoning into two distinct stages:
+1. **Extraction (Stage 1):** Scans the raw factual data to find and categorize isolated insights (SEO, UX, Content) with specific evidence and severity.
+2. **Synthesis (Stage 2):** Takes the raw insights and acts as a strategic consultant, prioritizing and merging them into 3-5 high-impact, executive-ready recommendations.
+
+Why:
+
+- Improves the depth and accuracy of findings.
+- Prevents the model from being overwhelmed by trying to format and synthesize at the same time.
+- Ensures recommendations explicitly address the most critical insights identified in the first stage.
+
 ## Trade-offs
 
 ### Static vs. Dynamic Scraping
@@ -132,23 +144,13 @@ Trade-off:
 
 2. Richer Technical Metrics
 - Add Core Web Vitals/Lighthouse integration
-- Add accessibility audits (WCAG checks, ARIA/contrast validation)
-- Add structured data/schema.org validation
 
 3. Better AI Reliability Controls
 - Add confidence scoring and explicit "insufficient evidence" handling
-- Add prompt/version tracking for reproducibility
-- Add guardrails to prevent duplicate or low-value recommendations
 
 4. Product and UX Enhancements
 - Multi-page crawl mode (not only single URL)
 - Side-by-side baseline vs re-audit comparison
-- Export to PDF/CSV and shareable report links
-
-5. Ops and Quality
-- End-to-end tests for `POST /analyze` and UI rendering
-- Caching and rate-limiting strategies
-- Observability: structured logs, request tracing, model latency/cost dashboards
 
 ## Local Development
 

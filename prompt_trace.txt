@@ -1,8 +1,10 @@
+---- Stage 01 ----
+
 System Prompt: ROLE
 You are a senior-level Website Auditor, specializing in SEO, performance, accessibility, messaging clarity, and conversion optimization.
 
 OBJECTIVE
-Analyze structured metrics and content snippets from a single webpage audit dataset and generate a structured, data-driven audit report.
+Analyze structured metrics and content snippets from a single webpage audit dataset and generate a structured, data-driven list of audit insights.
 
 SCOPE OF ANALYSIS
 You MUST cover the following areas:
@@ -58,6 +60,8 @@ Each insight MUST include:
 - Finding (clear issue)
 - Evidence (exact supporting data from input)
 - Impact (business or user consequence)
+- Severity (Low / Moderate / High / Critical)
+- Dedup Key (normalized identifier for deduplication)
 
 DUPLICATION RULES
 - Do NOT repeat the same issue in different wording.
@@ -78,11 +82,8 @@ STRICT RULES
 OUTPUT STYLE
 - Professional, concise, and analytical tone
 - Consultant-grade observations only
-- Use structured format:
-
-Finding:
-Evidence:
-Impact:
+- Focus on findings, evidence, impact, and severity
+- Use structured format
 
 EXAMPLE
 
@@ -90,10 +91,13 @@ Finding:
 Only 3 CTAs are present across the page.
 
 Evidence:
-CTA count = 3 on a long-form page.
+CTA count = 3 on a long-form page (2,400 words).
 
 Impact:
 This limits user guidance and reduces conversion opportunities, especially for users who do not scroll through the entire page.
+
+Severity:
+High
 
 ---
 
@@ -101,14 +105,14 @@ Finding:
 8 out of 12 images are missing alt text.
 
 Evidence:
-Alt text present on 4 images, missing on 8 images.
+Alt text present on 4 images, missing on 8 images (66.7%).
 
 Impact:
 This creates a high SEO and accessibility risk by reducing image search visibility and limiting usability for screen reader users.
 
-================================================================================================================================================
+------------------------------------------------------------------------------------------------
 
-User Prompt: Analyze the following data for the URL: B2B Digital Agency for Enterprises | eight25
+Stage 1 - User Prompt: Analyze the following data for the URL: B2B Digital Agency for Enterprises | eight25
 
 FACTUAL METRICS:
 - Word Count: 384
@@ -124,81 +128,213 @@ FACTUAL METRICS:
 CONTENT SNIPPET:
 B2B Digital Agency for Enterprises | eight25 [space] Work Services Brand Brand Strategy Visual Identity Brand Enablement Campaign Development Creative Web Design App + Interface Design Interaction + Motion Design Video Technology CMS Implementation Web Architecture + Backend Development Personalization Data Integration + Analytics Growth Search Engine Optimization Conversion Rate Optimization Account Based Marketing Content Strategy + Marketing Execution Studio  Services Cras mattis consectetur purus sit amet fermentum. Nullam quis risus eget urna mollis ornare vel eu leo. Curabitur blandit tempus porttitor. Learn More Platforms About Blog Let’s talk Digital experiences for the modern enterprise We build brands and web experiences that help you build the ultimate customer journey. Your browser does not support HTML5 video. The world’s best companies choose to work with eight25 Google Link Your browser does not support HTML5 video. Qlik Link Your browser does not support HTML5 video. Intralinks Link Your browser does not support HTML5 video. Andela Link Your browser does not support HTML5 video. Qualcomm Link Your browser does not support HTML5 video. View all work Insights Analyzing the ‘Request a Demo’ Page: Unpacking Why Conversions Are Lagging B2B SaaS Enterprise Demo Read More Uncovering Homepage Hero Friction: Why Visitors Bounce and How to Fix It GTM B2B SaaS Read More Why Is Brand Alignment Important For B2B Enterprise Websites? GTM B2B Read More Assessment:  Is your website dressed for success? GTM B2B SaaS Read More Planning to Sell to Enterprise? Start With a Hard Look at Your Website CRO Social proof Product images Read More Read our blog Success stories… We are partnering with forward-thinking companies and privileged to work with Fortune 500 companies, technology SMEs, and funded startups. Your browser does not support HTML5 video. Watch Video We are partnering with forward-thinking companies and privileged to work with Fortune 500 companies, technology SMEs, and funded startups. Your browser does not support HTML5 video. Watch Video We are partnering with forward-thinking companies and privileged to work with Fortune 500 companies, technology SMEs, and funded startups. Your browser does not support HTML5 video. Watch Video Let’s work together. Name Email Address Phone Company Message.... Submit 2055 Gateway Place - Ste 500 San Jose, CA 95110 © 2026 EIGHT25MEDIA. All Rights Reserved Privacy Policy Terms AI info Privacy Policy Terms AI info About Contact Us Blog Facebook Linkedin
 
-=========================================================================================================================================================
+YOUR TASK:
+Extract 3-8 distinct audit insights from the above metrics and content. For each insight, provide:
+- Finding: The specific issue identified
+- Evidence: Exact metrics supporting the finding
+- Impact: Business or user consequence
+- Severity: Low / Moderate / High / Critical
 
-AI raw output: {
+------------------------------------------------------------------------------------------------
+
+Stage 1 - Insights output: {
   "insights": [
     {
-      "dedup_key": "missing_alt_text_critical",
-      "category": "Accessibility",
-      "finding": "A critical majority of images on the page are missing descriptive alt text.",
-      "evidence": "Total Images: 30, Images Missing Alt Text: 93.33%.",
-      "impact": "This creates a critical barrier for accessibility tools like screen readers and severely hinders the page's SEO performance for image search, making visual content undiscoverable for search engines.",
-      "severity": "Critical"
-    },
-    {
-      "dedup_key": "placeholder_text_present",
-      "category": "Content",
-      "finding": "Placeholder text (Lorem Ipsum) is present within a prominent content section of the page.",
-      "evidence": "The phrase 'Cras mattis consectetur purus sit amet fermentum. Nullam quis risus eget urna mollis ornare vel eu leo. Curabitur blandit tempus porttitor.' appears under 'Studio Services' in the content snippet.",
-      "impact": "This severely damages professional credibility, indicates an incomplete or unpolished website, and degrades the user experience by presenting meaningless content, potentially leading to immediate bounce and distrust.",
-      "severity": "Critical"
-    },
-    {
-      "dedup_key": "low_word_count_b2b",
-      "category": "Content",
-      "finding": "The page exhibits limited textual content, which is insufficient for an enterprise-focused B2B agency's primary service page.",
-      "evidence": "Word Count: 384 words.",
-      "impact": "This restricted content depth hinders the page's ability to thoroughly explain complex services, establish authority, and address the detailed considerations typically required by enterprise clients, potentially reducing engagement, SEO potential, and conversion rates.",
-      "severity": "Moderate"
-    },
-    {
-      "dedup_key": "video_fallback_issue",
-      "category": "UX",
-      "finding": "Multiple video elements on the page display a generic browser fallback message instead of content or an appropriate alternative.",
-      "evidence": "The phrase 'Your browser does not support HTML5 video.' is repeated multiple times in the content snippet where video elements are expected.",
-      "impact": "Users with incompatible browsers or network issues will miss key visual content, leading to a fragmented and potentially frustrating user experience and a loss of conveyed information.",
-      "severity": "Moderate"
-    },
-    {
-      "dedup_key": "linking_imbalance",
+      "dedup_key": "missing_alt_text",
       "category": "SEO",
-      "finding": "There is a significant imbalance between internal and external links, heavily favoring internal navigation over external authority building.",
+      "finding": "A critical number of images on the page are missing alt text.",
+      "evidence": "93.33% of 30 images are missing alt text.",
+      "impact": "This creates a significant barrier for accessibility, hindering screen reader users and those with visual impairments. From an SEO perspective, it severely limits the page's ability to rank for image searches and reduces the overall contextual understanding of the page's visual content by search engines.",
+      "severity": "Critical"
+    },
+    {
+      "dedup_key": "low_content_depth",
+      "category": "Content",
+      "finding": "The page has extremely limited content depth given its stated purpose of targeting enterprise-level clients.",
+      "evidence": "Total word count is 384 words for a 'B2B Digital Agency for Enterprises' page.",
+      "impact": "This minimal content volume is insufficient to thoroughly explain complex services, build authority, or address the nuanced needs of Fortune 500 decision-makers. It likely results in a lack of user engagement, high bounce rates, and missed opportunities for organic keyword rankings.",
+      "severity": "High"
+    },
+    {
+      "dedup_key": "placeholder_content",
+      "category": "UX",
+      "finding": "The core services section contains unedited placeholder Latin text, indicating incomplete or erroneous content.",
+      "evidence": "The content snippet for 'Services' includes 'Cras mattis consectetur purus sit amet fermentum. Nullam quis risus eget urna mollis ornare vel eu leo. Curabitur blandit tempus porttitor. Learn More'.",
+      "impact": "This severely damages the page's professionalism and credibility, particularly for an agency targeting enterprise clients. It creates a poor user experience, prevents users from understanding key offerings, and suggests a lack of attention to detail or readiness.",
+      "severity": "Critical"
+    },
+    {
+      "dedup_key": "internal_external_link_imbalance",
+      "category": "SEO",
+      "finding": "The page exhibits a highly disproportionate ratio of internal links to external links.",
       "evidence": "51 internal links versus only 2 external links.",
-      "impact": "While strong internal linking is beneficial, an extremely low number of external links can limit opportunities to build external authority, cite credible sources, or provide additional valuable resources to users, potentially impacting SEO value and user trust.",
-      "severity": "Low"
-    }
-  ],
-  "recommendations": [
-    {
-      "priority": "High",
-      "action": "Implement descriptive and keyword-rich alt text for all images present on the page.",
-      "reasoning": "This directly addresses the critical accessibility barrier and leverages missed SEO opportunities for image search, significantly improving both user experience and search engine visibility.",
-      "related_insight": 0
+      "impact": "While strong internal linking is beneficial for site navigation and SEO, a severe lack of external links can be a missed opportunity to leverage external authority and provide users with valuable, relevant external resources. For an enterprise agency, this might reduce opportunities to cite industry sources or showcase partnerships.",
+      "severity": "Moderate"
     },
     {
-      "priority": "High",
-      "action": "Replace all placeholder text ('Cras mattis...') with meaningful, final content that accurately describes the 'Studio Services' and other incomplete sections.",
-      "reasoning": "Eliminating placeholder content is crucial for restoring professional credibility, providing actual value to users, and ensuring search engines index relevant, high-quality information.",
-      "related_insight": 1
-    },
-    {
-      "priority": "Medium",
-      "action": "Expand the page's textual content to provide more in-depth information about services, methodology, case studies, and unique value propositions relevant to enterprise clients.",
-      "reasoning": "Increasing content depth will enhance the page's authority and relevance for search engines, better inform sophisticated enterprise decision-makers, and improve overall engagement and conversion potential.",
-      "related_insight": 2
-    },
-    {
-      "priority": "Medium",
-      "action": "Implement robust video fallback strategies, such as providing informative static images with descriptive text, embedding playable video files directly, or linking to external video platforms, instead of generic HTML5 messages.",
-      "reasoning": "Improving video fallback ensures all users can access and understand the visual content, regardless of browser compatibility, thereby enhancing user experience and ensuring consistent content delivery.",
-      "related_insight": 3
-    },
-    {
-      "priority": "Low",
-      "action": "Strategically identify and integrate relevant, high-quality external links to authoritative industry sources, partner websites, or supporting research where appropriate.",
-      "reasoning": "A more balanced linking strategy, including relevant external links, can signal external authority to search engines and provide additional valuable context and trust signals for users.",
-      "related_insight": 4
+      "dedup_key": "high_cta_density",
+      "category": "Conversion",
+      "finding": "A high number of Calls to Action (CTAs) are present on a page with very limited content.",
+      "evidence": "10 CTAs on a page with only 384 words.",
+      "impact": "While CTAs are essential, such a high density on a short page can lead to user overwhelm or decision fatigue, potentially making the page feel overly promotional. This could detract from the user experience and reduce the effectiveness of individual CTAs, negatively impacting conversion rates.",
+      "severity": "Moderate"
     }
   ]
 }
+
+---- Stage 2 ----
+
+Stage 2 - System Prompt: ROLE
+You are a strategic business consultant specializing in digital product optimization. Your expertise spans SEO, conversion rate optimization (CRO), user experience, and content strategy.
+
+OBJECTIVE
+Synthesize a list of audit insights into a prioritized, executive-ready action plan. Return 3–5 high-impact recommendations that will drive measurable business outcomes.
+
+SCOPE
+You are given:
+- Factual metrics (word count, heading structure, image coverage, CTA count, link distribution, etc.)
+- Raw audit insights (findings, evidence, impact, severity)
+- The URL and metadata being audited
+
+Your job is to:
+1. Identify the highest-leverage opportunities among all insights
+2. Filter out low-impact or duplicate concerns
+3. Synthesize insights into cohesive, prioritized recommendations
+4. Rank by estimated business impact and feasibility
+
+CORE RESPONSIBILITIES
+- Do NOT simply list insights; synthesize them into strategic actions
+- Prioritize impact over case sensitivity; one high-impact recommendation beats three small fixes
+- Consider interconnections (e.g., improving CTAs + heading clarity = stronger conversion path)
+- Provide clear, implementable guidance tied to evidence
+
+PRIORITIZATION FRAMEWORK
+Rank recommendations by:
+1. Estimated impact (conversion risk, SEO visibility, accessibility/compliance)
+2. Effort (relative ease of implementation)
+3. Uniqueness (avoid redundant or overlapping recommendations)
+
+RECOMMENDATION STRUCTURE
+Each recommendation MUST include:
+- Action (specific, 1–2 sentence directive)
+- Reasoning (why this matters; tie to insights + business outcome)
+- Priority (High / Medium / Low)
+- Related Insight(s) (reference which insights this addresses)
+
+SYNTHESIS RULES
+- If multiple insights relate to the same issue (e.g., messaging clarity), synthesize into ONE recommendation
+- Filter duplicate insights; consolidate overlapping findings
+- Ignore low-severity findings if they don't rank in the top 5 by impact
+- If a recommendation addresses multiple insights, list all related indices
+
+TARGET COUNT
+Aim for 3–5 recommendations. Fewer, high-impact actions are better than many small tweaks.
+
+REASONING STYLE
+- Business-focused: Link to revenue, user experience, or compliance risk
+- Data-grounded: Reference exact metrics and insight evidence
+- Actionable: Avoid vague guidance; include specifics (e.g., "Add a CTA above the fold" not "Improve CTAs")
+- Strategic: Highlight synergies and compound effects when addressing multiple insights
+
+STRICT RULES
+- Do NOT repeat the same recommendation in different words
+- Do NOT provide generic boilerplate advice
+- Do NOT recommend actions without clear supporting evidence from the audit insights
+- Do NOT exceed 5 recommendations
+- Do NOT ignore critical or high-severity insights
+
+OUTPUT STYLE
+- Professional, executive tone
+- Consultant-grade rigor
+- Concise and punchy
+
+EXAMPLE
+
+Recommendation (Priority: High)
+Action: Implement a sticky or above-the-fold CTA button and distribute 2–3 additional CTAs throughout long-form content.
+Reasoning: With only 3 CTAs on a page containing 2,400 words, conversion friction is high. Users who don't scroll will never see a call-to-action. Adding a persistent element increases visibility and takes advantage of your strong content depth.
+Related Insights: [0, 2] (CTA underutilization, long content without adequate CTA distribution)
+
+---
+
+Recommendation (Priority: Medium)
+Action: Audit and consolidate internal links. Aim for a 3:1 internal-to-external link ratio to strengthen SEO and site architecture.
+Reasoning: A 1:2 internal-to-external ratio suggests navigation and SEO opportunity. Internal links boost crawlability and distribute page authority.
+Related Insights: [1] (Link distribution imbalance)
+
+---------------------------------------------------------------------------------------------------
+
+Stage 2 - User Prompt: AUDIT DATA FOR URL: B2B Digital Agency for Enterprises | eight25
+
+FACTUAL METRICS:
+- Word Count: 384
+- Headings: {'h1': 1, 'h2': 5, 'h3': 10} (H1, H2, H3)
+- Total Images: 30
+- Images Missing Alt Text: 93.33%
+- Internal Links: 51
+- External Links: 2
+- CTA Count: 10
+- Meta Title: B2B Digital Agency for Enterprises | eight25
+- Meta Description: Global B2B digital agency offering enterprise web design, mobile apps, and strategic consulting for Fortune 500 firms.
+
+RAW AUDIT INSIGHTS:
+[
+  {
+    "dedup_key": "missing_alt_text",
+    "category": "SEO",
+    "finding": "A critical number of images on the page are missing alt text.",
+    "evidence": "93.33% of 30 images are missing alt text.",
+    "impact": "This creates a significant barrier for accessibility, hindering screen reader users and those with visual impairments. From an SEO perspective, it severely limits the page's ability to rank for image searches and reduces the overall contextual understanding of the page's visual content by search engines.",
+    "severity": "Critical"
+  },
+  {
+    "dedup_key": "low_content_depth",
+    "category": "Content",
+    "finding": "The page has extremely limited content depth given its stated purpose of targeting enterprise-level clients.",
+    "evidence": "Total word count is 384 words for a 'B2B Digital Agency for Enterprises' page.",
+    "impact": "This minimal content volume is insufficient to thoroughly explain complex services, build authority, or address the nuanced needs of Fortune 500 decision-makers. It likely results in a lack of user engagement, high bounce rates, and missed opportunities for organic keyword rankings.",
+    "severity": "High"
+  },
+  {
+    "dedup_key": "placeholder_content",
+    "category": "UX",
+    "finding": "The core services section contains unedited placeholder Latin text, indicating incomplete or erroneous content.",
+    "evidence": "The content snippet for 'Services' includes 'Cras mattis consectetur purus sit amet fermentum. Nullam quis risus eget urna mollis ornare vel eu leo. Curabitur blandit tempus porttitor. Learn More'.",
+    "impact": "This severely damages the page's professionalism and credibility, particularly for an agency targeting enterprise clients. It creates a poor user experience, prevents users from understanding key offerings, and suggests a lack of attention to detail or readiness.",
+    "severity": "Critical"
+  },
+  {
+    "dedup_key": "internal_external_link_imbalance",
+    "category": "SEO",
+    "finding": "The page exhibits a highly disproportionate ratio of internal links to external links.",
+    "evidence": "51 internal links versus only 2 external links.",
+    "impact": "While strong internal linking is beneficial for site navigation and SEO, a severe lack of external links can be a missed opportunity to leverage external authority and provide users with valuable, relevant external resources. For an enterprise agency, this might reduce opportunities to cite industry sources or showcase partnerships.",
+    "severity": "Moderate"
+  },
+  {
+    "dedup_key": "high_cta_density",
+    "category": "Conversion",
+    "finding": "A high number of Calls to Action (CTAs) are present on a page with very limited content.",
+    "evidence": "10 CTAs on a page with only 384 words.",
+    "impact": "While CTAs are essential, such a high density on a short page can lead to user overwhelm or decision fatigue, potentially making the page feel overly promotional. This could detract from the user experience and reduce the effectiveness of individual CTAs, negatively impacting conversion rates.",
+    "severity": "Moderate"
+  }
+]
+
+YOUR TASK:
+1. Review each insight and its severity/impact assessment
+2. Identify the 3–5 most strategically important insights
+3. Synthesize overlapping or related insights into cohesive recommendations
+4. Rank by business impact and implementation feasibility
+5. For each recommendation:
+   - Specify the exact action to take
+   - Explain why this matters (link to insight evidence and business outcome)
+   - Assign Priority: High / Medium / Low
+   - Reference which insights support this recommendation
+
+OUTPUT:
+Return a list of 3–5 prioritized recommendations. Do not exceed 5. Each recommendation should drive measurable business value (conversion, SEO, UX, or compliance).
+
+----------------------------------------------------------------------------------------------------
+
+Stage 2 - Prioritized recommendations output: {"recommendations": [{"priority": "High", "action": "Immediately remove all placeholder Latin text and undertake a comprehensive content expansion strategy to articulate enterprise-level services, value propositions, and thought leadership.", "reasoning": "The presence of placeholder content is a critical professionalism failure, while the extremely low word count (384 words) prevents the page from building authority or adequately informing enterprise clients. Addressing these will drastically improve credibility, user trust, engagement, and foundational SEO for relevant, high-value keywords, directly impacting lead generation.", "related_insights": [1, 2]}, {"priority": "High", "action": "Implement descriptive and relevant alt text for all images on the page.", "reasoning": "With 93.33% of images missing alt text, the page is inaccessible to screen reader users and significantly hinders SEO for image search. This is a critical barrier for a professional service targeting diverse clients and impacts overall SEO visibility and contextual understanding by search engines.", "related_insights": [0]}, {"priority": "Medium", "action": "After content expansion, reduce the overall number of Calls to Action (CTAs) and strategically integrate them within the richer content, ensuring each CTA has clear context and value.", "reasoning": "A density of 10 CTAs on a mere 384 words creates user overwhelm and dilutes the effectiveness of each call. By reducing the number and placing them thoughtfully within expanded, valuable content, the conversion experience will feel less aggressive and more guided, improving actual conversion rates without appearing overly promotional.", "related_insights": [4]}]}
